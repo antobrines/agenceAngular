@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'agence';
+  stateBuilding = 'A vendre';
+  sold = true;
+
+  getSoldValue(){
+    if(this.sold){
+      this.stateBuilding = 'Vendu';
+      return 'red';
+    }else{
+      return 'green';
+    }
+  }
 }
