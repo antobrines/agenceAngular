@@ -10,8 +10,26 @@ export class AppComponent {
   stateBuilding = 'A vendre';
   sold = true;
 
-  getSoldValue(){
-    if(this.sold){
+  properties = [
+    {
+      title: 'test',
+      category: 'Maison',
+      sold: true
+    },
+    {
+      title: 'Grand appartement',
+      category: 'Appartement',
+      sold: false
+    },
+    {
+      title: 'Grande maison',
+      category: 'Maison',
+      sold: false
+    }
+  ];
+
+  getSoldValue(index){
+    if (this.properties[index].sold){
       this.stateBuilding = 'Vendu';
       return 'red';
     }else{
