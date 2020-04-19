@@ -30,4 +30,10 @@ export class PropertiesService {
   emitProperties(){
     this.propetiesSubject.next(this.properties);
   }
+
+  getProperties() {}
+
+  createProperty(property){
+    this.properties.push(property);
+  }
 }
