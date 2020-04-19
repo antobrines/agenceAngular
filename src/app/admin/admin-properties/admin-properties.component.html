@@ -13,47 +13,47 @@
 
 <div class="modal fade" id="propertiesFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <form >
         <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edition d'un bien</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                  <input type="text" placeholder="Titre" class="form-control">
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01">Catégorie</label>
+            <form #propertiesForm="ngForm" (ngSubmit)="onSubmitPropertiesForm(propertiesForm)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edition d'un bien</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                  <option value="appartement">Appartement</option>
-                  <option value="maison">Maison</option>
-                </select>
-              </div>
-              <div class="form-row">
-                  <div class="form-group col-6">
-                      <input type="text" placeholder="Surface(m²)" class="form-control">
-                  </div>
-                  <div class="form-group col-6">
-                      <input type="text" placeholder="Nombre de pièces" class="form-control">
-                  </div> 
-              </div>
-              <div class="form-group">
-                  <textarea rows="4" class="form-control w-100" placeholder="Description du bien"></textarea>
-              </div>
-              <div class="form-group">
-                  <input type="text" placeholder="Prix" class="form-control">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="button" class="btn btn-primary">Enregistrer</button>
-            </div>
-          </div>
-      </form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" placeholder="Titre" class="form-control" name="title" ngModel  required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Catégorie</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="category" ngModel >
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <input type="text" placeholder="Surface(m²)" class="form-control" name="surface" ngModel >
+                        </div>
+                        <div class="form-group col-6">
+                            <input type="text" placeholder="Nombre de pièces" class="form-control" name="rooms" ngModel >
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" class="form-control w-100" placeholder="Description du bien" name="description" ngModel ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Prix" class="form-control" name="price" ngModel >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary"  [disabled]="propertiesForm.invalid">Enregistrer</button>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
