@@ -33,4 +33,5 @@ export class HomeComponent implements OnInit {
   ngOnDestroy() {
     this.propertiesSubscription.unsubscribe();
   }
+  
 }
