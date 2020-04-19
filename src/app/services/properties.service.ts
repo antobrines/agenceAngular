@@ -45,4 +45,30 @@ export class PropertiesService {
     this.saveProperties();
     this.emitProperties();
   }
+
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const uniqueId = Date.now().toString();
+        const fileName = uniqueId + file.name;
+        const upload = firebase.storage().ref().child('images/properties/' + fileName).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            console.log('Chargement...');
+          },
+          (error) => {
+            console.error(error);
+            reject(error);
+          },
+          () => {
+            upload.snapshot.ref.getDownloadURL().then(
+              (downloadUrl) => {
+                resolve(downloadUrl);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
 }
