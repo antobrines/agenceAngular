@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertiesService } from './../services/properties.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,21 +10,16 @@ import { PropertiesService } from './../services/properties.service';
 export class HomeComponent implements OnInit {
 
   properties = [];
-  
+  propertiesSubscription: Subscription;
   constructor(private propertiesService: PropertiesService) { }
 
   ngOnInit() {
-    this.propertiesService.getProperties().subscribe(
+    this.propertiesSubscription = this.propertiesService.propetiesSubject.subscribe(
       (data: any) => {
         this.properties = data;
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => {
-        console.log('Observable complete!s');
       }
-    )
+    );
+    this.propertiesService.emitProperties();
   }
 
   getSoldValue(index){
@@ -32,5 +28,9 @@ export class HomeComponent implements OnInit {
     }else{
       return 'green';
     }
+  }
+
+  ngOnDestroy() {
+    this.propertiesSubscription.unsubscribe();
   }
 }
