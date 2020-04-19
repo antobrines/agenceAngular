@@ -67,6 +67,13 @@
                     <div class="form-group">
                         <input type="text" placeholder="Prix" class="form-control" formControlName="price"  >
                     </div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="sold">
+                        <label class="custom-control-label" for="customSwitch1">
+                            <span *ngIf="propertiesForm.value.sold" class="text-success">Vendu !</span>
+                            <span *ngIf="!propertiesForm.value.sold" class="text-danger">A vendre</span>
+                        </label>
+                      </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { Property } from './../interfaces/property';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class PropertiesService {
 
   getProperties() {}
 
-  createProperty(property){
+  createProperty(property: Property){
     this.properties.push(property);
   }
 
@@ -42,7 +43,7 @@ export class PropertiesService {
     this.emitProperties();
   }
 
-  updateProperty(property, index){
+  updateProperty(property: Property, index){
     this.properties[index] = property;
     this.emitProperties();
   }

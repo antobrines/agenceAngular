@@ -3,6 +3,7 @@ import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PropertiesService } from './../../services/properties.service';
 import { Subscription } from 'rxjs';
 import * as $ from 'jquery';
+import { Property } from './../../interfaces/property';
 
 @Component({
   selector: 'app-admin-properties',
@@ -13,7 +14,7 @@ export class AdminPropertiesComponent implements OnInit {
 
   propertiesForm: FormGroup;
   propertiesSubscription: Subscription;
-  properties: any[] = [];
+  properties: Property[] = [];
   indexRemove;
   indexUpdate;
   editMode = false;
@@ -25,7 +26,7 @@ export class AdminPropertiesComponent implements OnInit {
   ngOnInit() {
     this.initPropertiesForm();
     this.propertiesService.propetiesSubject.subscribe(
-      (data) => {
+      (data: Property[]) => {
         this.properties = data;
       }
     );
@@ -40,11 +41,12 @@ export class AdminPropertiesComponent implements OnInit {
       rooms: ['', Validators.required],
       description: '',
       price: ['', Validators.required],
+      sold: '',
     });
   }
 
   onSubmitPropertiesForm(){
-    const newProperty = this.propertiesForm.value;
+    const newProperty: Property = this.propertiesForm.value;
     if (this.editMode){
       this.propertiesService.updateProperty(newProperty, this.indexUpdate);
     } else{
@@ -69,7 +71,7 @@ export class AdminPropertiesComponent implements OnInit {
     $('#deletePropertyModal').modal('hide');
   }
 
-  onEditProperty(property){
+  onEditProperty(property: Property){
     this.editMode = true;
     $('#propertiesFormModal').modal('show');
     this.propertiesForm.get('title').setValue(property.title);
@@ -78,6 +80,7 @@ export class AdminPropertiesComponent implements OnInit {
     this.propertiesForm.get('rooms').setValue(property.rooms);
     this.propertiesForm.get('surface').setValue(property.surface);
     this.propertiesForm.get('description').setValue(property.description);
+    this.propertiesForm.get('sold').setValue(property.sold);
     const index = this.properties.findIndex(
       (propertyEl) =>  {
         if (propertyEl === property) {
