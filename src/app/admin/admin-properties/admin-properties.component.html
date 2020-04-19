@@ -11,7 +11,7 @@
             <div class="d-flex">
                 <h3 class="font-weight-normal">{{property.title}}</h3>
                 <div class="m1-auto">
-                    <button class="btn btn-primary m-1" type="button"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-primary m-1" type="button" (click)='onEditProperty(property)'><i class="fas fa-edit"></i></button>
                     <button class="btn btn-danger m-1" type="button" (click)='onDeleteProperty(index)'><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                         <label class="input-group-text" for="inputGroupSelect01">Catégorie</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" formControlName="category"  >
-                            <option value="appartement">Appartement</option>
-                            <option value="maison">Maison</option>
+                            <option value="Appartement">Appartement</option>
+                            <option value="Maison">Maison</option>
                         </select>
                     </div>
                     <div class="form-row">

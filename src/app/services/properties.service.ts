@@ -41,4 +41,9 @@ export class PropertiesService {
     this.properties.splice(index, 1);
     this.emitProperties();
   }
+
+  updateProperty(property, index){
+    this.properties[index] = property;
+    this.emitProperties();
+  }
 }

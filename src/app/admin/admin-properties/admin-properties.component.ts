@@ -15,6 +15,8 @@ export class AdminPropertiesComponent implements OnInit {
   propertiesSubscription: Subscription;
   properties: any[] = [];
   indexRemove;
+  indexUpdate;
+  editMode = false;
   constructor(
     private formBuilder: FormBuilder,
     private propertiesService: PropertiesService
@@ -43,12 +45,17 @@ export class AdminPropertiesComponent implements OnInit {
 
   onSubmitPropertiesForm(){
     const newProperty = this.propertiesForm.value;
-    this.propertiesService.createProperty(newProperty);
+    if (this.editMode){
+      this.propertiesService.updateProperty(newProperty, this.indexUpdate);
+    } else{
+      this.propertiesService.createProperty(newProperty);
+    }
     $('#propertiesFormModal').modal('hide');
   }
 
   resetForm(){
     this.propertiesForm.reset();
+    this.editMode = false;
   }
 
   onDeleteProperty(index){
@@ -60,5 +67,24 @@ export class AdminPropertiesComponent implements OnInit {
   onConfirmDeleteProperty(){
     this.propertiesService.deleteProperty(this.indexRemove);
     $('#deletePropertyModal').modal('hide');
+  }
+
+  onEditProperty(property){
+    this.editMode = true;
+    $('#propertiesFormModal').modal('show');
+    this.propertiesForm.get('title').setValue(property.title);
+    this.propertiesForm.get('category').setValue(property.category);
+    this.propertiesForm.get('price').setValue(property.price);
+    this.propertiesForm.get('rooms').setValue(property.rooms);
+    this.propertiesForm.get('surface').setValue(property.surface);
+    this.propertiesForm.get('description').setValue(property.description);
+    const index = this.properties.findIndex(
+      (propertyEl) =>  {
+        if (propertyEl === property) {
+          return true;
+        }
+      }
+    );
+    this.indexUpdate = index;
   }
 }
