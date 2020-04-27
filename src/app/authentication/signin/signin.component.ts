@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-
+  /**
+   * Formualire de connexion de type FormGroup
+   */
   signinForm: FormGroup;
 
   constructor(
@@ -18,17 +20,25 @@ export class SigninComponent implements OnInit {
     private router: Router
   ) { }
 
+  /**
+   * Initialise le formulaire
+   */
   ngOnInit() {
     this.initSigninForm();
   }
 
+  /**
+   * Formulaire de connexion
+   */
   initSigninForm() {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
+  /**
+   * Lorsque le formulaire est validée, cela authentifi l'utilisateur et le redirige sur la route /admin/dashboard
+   */
   onSubmitSigninForm() {
     const email = this.signinForm.get('email').value;
     const password = this.signinForm.get('password').value;

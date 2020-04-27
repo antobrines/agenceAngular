@@ -16,7 +16,9 @@ export class SinglePropertyComponent implements OnInit {
     private route: ActivatedRoute,
     private propertiesService: PropertiesService
   ) { }
-
+  /**
+   * Récupère une seule property
+   */
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.propertiesService.getSingleProperties(id).then(

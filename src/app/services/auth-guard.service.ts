@@ -11,7 +11,9 @@ export class AuthGuardService implements CanActivate {
   constructor(
     private router: Router
   ) { }
-
+  /**
+   * Permet de rediriger l'utilisateur si il n'est pas connecter lorsqu'il essaye de se rendre à la page d'administration
+   */
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise(
       (resolve, reject) => {

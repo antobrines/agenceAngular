@@ -8,15 +8,24 @@ import * as firebase from 'firebase';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  title = 'Ma Super Agence';
-
+  /**
+   * Nom du site
+   */
+  title = 'Agence';
+  /**
+   * Savoir si une personne est connécté ou non
+   */
   isLoggedIn = false;
-
+  /**
+   * Ajoute le service d'authentification
+   * @param authenticationService
+   */
   constructor(
     private authenticationService: AuthenticationService
   ) { }
-
+  /**
+   * Connecter un utilisateur ou non
+   */
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
       (userSession) => {
@@ -29,7 +38,9 @@ export class HeaderComponent implements OnInit {
       }
     );
   }
-
+  /**
+   * Déconnecte un utilisateur
+   */
   onSignOut() {
     this.authenticationService.signOutUser();
   }

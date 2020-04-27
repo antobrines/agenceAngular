@@ -11,18 +11,41 @@ import { Property } from 'src/app/interfaces/property';
   styleUrls: ['./admin-properties.component.css']
 })
 export class AdminPropertiesComponent implements OnInit {
-
+  /**
+   * Formulaire des propriétés 
+   */
   propertiesForm: FormGroup;
+  /**
+   * Abonnement aux proprétés (RxJs)
+   */
   propertiesSubscription: Subscription;
+  /**
+   * Tableau des propriétés
+   */
   properties: Property[] = [];
-
+  /**
+   * Sauvegarde de l'index à supprimer
+   */
   indexToRemove;
-
+  /**
+   * Sauvegarde de l'index à mmodifier
+   */
   indexToUpdate;
+  /**
+   * Permet de savoir si on est en mode édition ou non
+   */
   editMode = false;
-
+  /**
+   * Permet de savoir si la photo est en train d'être uploader
+   */
   photoUploading = false;
+  /**
+   * Permet de savoir si la photo à été uploader
+   */
   photoUploaded = false;
+  /**
+   * Liste des photos uploader
+   */
   photosAdded: any[] = [];
 
   constructor(
@@ -30,6 +53,9 @@ export class AdminPropertiesComponent implements OnInit {
     private propertiesService: PropertiesService
   ) { }
 
+  /**
+   * Récupère toutes les properties de la base de donné en s'abonnant à l'aide de RxJs
+   */
   ngOnInit() {
     this.initPropertiesForm();
     this.propertiesService.propertiesSubject.subscribe(
@@ -40,7 +66,9 @@ export class AdminPropertiesComponent implements OnInit {
     this.propertiesService.getProperties();
     this.propertiesService.emitProperties();
   }
-
+  /**
+   * Initialise le formulaire des propriété
+   */
   initPropertiesForm() {
     this.propertiesForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -52,7 +80,9 @@ export class AdminPropertiesComponent implements OnInit {
       sold: ''
     });
   }
-
+  /**
+   * Ajoute ou modifie une property
+   */
   onSubmitPropertiesForm() {
     const newProperty: Property = this.propertiesForm.value;
     newProperty.sold = this.propertiesForm.get('sold').value ? this.propertiesForm.get('sold').value : false;
@@ -64,18 +94,25 @@ export class AdminPropertiesComponent implements OnInit {
     }
     $('#propertiesFormModal').modal('hide');
   }
-
+  /**
+   * Permet de reset le formulaire des properties
+   */
   resetForm() {
     this.editMode = false;
     this.propertiesForm.reset();
     this.photosAdded = [];
   }
-
+  /**
+   * Permet d'initialiser l'index à supprimer lors de la selecter d'une property
+   * @param index
+   */
   onDeleteProperty(index) {
     $('#deletePropertyModal').modal('show');
     this.indexToRemove = index;
   }
-
+  /**
+   * Supprime de la base de donné une property
+   */
   onConfirmDeleteProperty() {
     this.properties[this.indexToRemove].photos.forEach(
       (photo) => {
@@ -85,7 +122,10 @@ export class AdminPropertiesComponent implements OnInit {
     this.propertiesService.deleteProperty(this.indexToRemove);
     $('#deletePropertyModal').modal('hide');
   }
-
+  /**
+   * Permet de savoir si on est en mode édition ou non et si on l'est, cela ajoute directement les valeurs de la bonne preperty
+   * @param property
+   */
   onEditProperty(property: Property) {
     this.editMode = true;
     $('#propertiesFormModal').modal('show');
@@ -106,7 +146,10 @@ export class AdminPropertiesComponent implements OnInit {
     );
     this.indexToUpdate = index;
   }
-
+  /**
+   * Permet d'ajouter une image lors d'un upload de fichier
+   * @param event
+   */
   onUploadFile(event) {
     this.photoUploading = true;
     this.propertiesService.uploadFile(event.target.files[0]).then(
@@ -120,7 +163,10 @@ export class AdminPropertiesComponent implements OnInit {
       }
     );
   }
-
+  /**
+   * Supprime une image
+   * @param index
+   */
   onRemoveAddedPhoto(index) {
     this.propertiesService.removeFile(this.photosAdded[index]);
     this.photosAdded.splice(index, 1);
